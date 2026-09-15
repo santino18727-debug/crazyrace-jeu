@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CrazyRace — Time attack anti-gravité</title>
+<meta name="description" content="CrazyRace : six circuits longs à parcourir en anti-gravité, cinq véhicules, des pads de boost. Ton meilleur temps devient un mur. Bats-le sans le toucher.">
+<style>
+  :root {
+    --bg: #0a0714;
+    --bg-alt: #120c24;
+    --panel: #150f2b;
+    --neon-cyan: #33fff0;
+    --neon-magenta: #ff2ecb;
+    --neon-purple: #8b5cf6;
+    --text: #eae6ff;
+    --text-dim: #9d94c4;
+    --border: rgba(139, 92, 246, 0.35);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: radial-gradient(ellipse at top, #1a1030 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  header.hero {
+    padding: 72px 20px 56px;
+    text-align: center;
+    background:
+      linear-gradient(180deg, rgba(139,92,246,0.12), transparent 60%);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-size: clamp(2.4rem, 7vw, 4.2rem);
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    margin: 0;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 40px rgba(255,46,203,0.25);
+  }
+  .tagline {
+    color: var(--text-dim);
+    font-size: 1.15rem;
+    max-width: 46ch;
+    margin: 14px auto 34px;
+  }
+  .cta {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 34px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #060312;
+    background: linear-gradient(90deg, var(--neon-cyan), #7ffce0);
+    border: none;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 0 30px rgba(51,255,240,0.45), 0 8px 24px rgba(0,0,0,0.4);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-download:hover { transform: translateY(-2px); box-shadow: 0 0 44px rgba(51,255,240,0.65); }
+  .version-tag {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+  .fallback-link { color: var(--neon-cyan); }
+  .fallback-link, .fallback-link:visited { text-decoration: underline; }
+
+  section { padding: 56px 0; }
+  h2 {
+    font-size: 1.6rem;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 18px rgba(51,255,240,0.35);
+    margin-bottom: 20px;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+  }
+  .feature-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .feature-card .num {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--neon-magenta);
+  }
+  .feature-card p { margin: 6px 0 0; color: var(--text-dim); font-size: 0.95rem; }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    display: block;
+  }
+
+  .config-box {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 26px;
+  }
+  .config-box ul { margin: 0; padding-left: 20px; color: var(--text-dim); }
+  .config-box li { margin: 4px 0; }
+
+  .honest-box {
+    background: rgba(255, 190, 60, 0.08);
+    border: 1px solid rgba(255, 190, 60, 0.4);
+    border-radius: 14px;
+    padding: 22px 26px;
+  }
+  .honest-box h3 { margin-top: 0; color: #ffcf66; }
+  .honest-box code {
+    background: rgba(0,0,0,0.35);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px 20px 60px;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--neon-cyan); }
+
+  @media (max-width: 480px) {
+    header.hero { padding: 48px 16px 40px; }
+    .btn-download { padding: 14px 26px; font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="logo">CRAZYRACE</p>
+  <p class="tagline">Ton meilleur temps devient un mur. Bats-le sans le toucher.</p>
+  <div class="cta">
+    <a id="download-btn" class="btn-download" href="https://github.com/santino18727-debug/crazyrace-jeu/releases" target="_blank" rel="noopener">
+      ⬇ Télécharger pour Windows
+    </a>
+    <span class="version-tag" id="version-tag">Dernière version : —</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <h2>Le jeu</h2>
+    <div class="features">
+      <div class="feature-card"><div class="num">6</div><p>circuits longs, rapides et texturés, chacun avec son identité (réacteur orbital, spirale, enclave urbaine…).</p></div>
+      <div class="feature-card"><div class="num">5</div><p>véhicules anti-gravité au caractère propre — même performance, sensations différentes.</p></div>
+      <div class="feature-card"><div class="num">⚡</div><p>pads de boost disséminés sur les tracés pour casser ta propre trace fantôme.</p></div>
+      <div class="feature-card"><div class="num">👻</div><p>ton meilleur tour reste en jeu sous forme de fantôme : le seul adversaire, c'est toi.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Captures</h2>
+    <div class="gallery">
+      <img src="img/reacteur_orbital.jpg" alt="Circuit Réacteur orbital, tunnel de turbine anti-gravité" loading="lazy">
+      <img src="img/spirale_orbitale.jpg" alt="Circuit Spirale orbitale, hélice ascendante" loading="lazy">
+      <img src="img/circuit_11.jpg" alt="Circuit anti-gravité avec véhicule Bastion" loading="lazy">
+      <img src="img/circuit_12.jpg" alt="Circuit avec véhicule Neon Driver" loading="lazy">
+      <img src="img/circuit_14.jpg" alt="Circuit anti-gravité à thème" loading="lazy">
+    </div>
+  </section>
+
+  <section>
+    <h2>Configuration minimale</h2>
+    <div class="config-box">
+      <ul>
+        <li>Windows 10 ou 11, 64 bits</li>
+        <li>GPU compatible Vulkan (la quasi-totalité des cartes depuis ~2016)</li>
+        <li>~250 Mo d'espace disque</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>À savoir avant d'installer</h2>
+    <div class="honest-box">
+      <h3>⚠️ L'installateur n'est pas signé</h3>
+      <p>
+        CrazyRace est un projet gratuit, sans budget de certificat de signature de code.
+        Windows SmartScreen va très probablement afficher <strong>« Windows a protégé votre ordinateur »</strong>.
+        C'est attendu : clique sur <strong>« Informations complémentaires »</strong> puis
+        <strong>« Exécuter quand même »</strong> pour lancer l'installation.
+      </p>
+      <p>
+        L'installateur ne demande aucun droit administrateur : il s'installe dans ton dossier
+        utilisateur (<code>%LOCALAPPDATA%\Programs\CrazyRace</code>) et se désinstalle proprement
+        depuis « Applications » Windows.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    CrazyRace — projet indépendant de GabiDevFamily.
+    Code source du site : <a href="https://github.com/santino18727-debug/crazyrace-jeu" target="_blank" rel="noopener">crazyrace-jeu</a>
+    · <a href="https://github.com/santino18727-debug/crazyrace-jeu/releases" target="_blank" rel="noopener">Toutes les versions</a>
+  </p>
+</footer>
+
+<script>
+(function () {
+  var API = "https://api.github.com/repos/santino18727-debug/crazyrace-jeu/releases/latest";
+  var btn = document.getElementById("download-btn");
+  var tag = document.getElementById("version-tag");
+
+  fetch(API).then(function (r) {
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  }).then(function (release) {
+    var asset = (release.assets || []).find(function (a) {
+      return /\.exe$/i.test(a.name);
+    });
+    if (asset) {
+      btn.href = asset.browser_download_url;
+    }
+    if (release.tag_name) {
+      tag.textContent = "Dernière version : " + release.tag_name;
+    }
+  }).catch(function () {
+    // Repli : le bouton garde son lien vers la page Releases (déjà posé
+    // dans le HTML), et le libellé de version reste neutre plutôt que de
+    // mentir sur un numéro qu'on n'a pas pu vérifier.
+    tag.textContent = "Voir toutes les versions sur GitHub";
+  });
+})();
+</script>
+
+</body>
+</html>
