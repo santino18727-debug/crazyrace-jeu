@@ -73,6 +73,25 @@
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .btn-download:hover { transform: translateY(-2px); box-shadow: 0 0 44px rgba(51,255,240,0.65); }
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+  .btn-android {
+    background: linear-gradient(90deg, var(--neon-magenta), #ff7ae0);
+    box-shadow: 0 0 30px rgba(255,46,203,0.45), 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .btn-android:hover { box-shadow: 0 0 44px rgba(255,46,203,0.65); }
+  /* Sur un navigateur Android, le bouton du téléphone passe devant. */
+  .cta-buttons.is-android #android-btn { order: -1; }
+  .android-note {
+    max-width: 52ch;
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
   .version-tag {
     font-size: 0.85rem;
     color: var(--text-dim);
@@ -165,9 +184,18 @@
   <p class="logo">CRAZYRACE</p>
   <p class="tagline">Ton meilleur temps devient un mur. Bats-le sans le toucher.</p>
   <div class="cta">
-    <a id="download-btn" class="btn-download" href="https://github.com/santino18727-debug/crazyrace-jeu/releases" target="_blank" rel="noopener">
-      ⬇ Télécharger pour Windows
-    </a>
+    <div class="cta-buttons" id="cta-buttons">
+      <a id="download-btn" class="btn-download" href="https://github.com/santino18727-debug/crazyrace-jeu/releases" target="_blank" rel="noopener">
+        ⬇ Télécharger pour Windows
+      </a>
+      <a id="android-btn" class="btn-download btn-android" href="https://github.com/santino18727-debug/crazyrace-jeu/releases" target="_blank" rel="noopener">
+        ⬇ Télécharger pour Android
+      </a>
+    </div>
+    <p class="android-note" id="android-note">
+      Android (APK) : au premier lancement, ton téléphone te demandera d'autoriser
+      l'installation depuis ton navigateur (« sources inconnues »).
+    </p>
     <span class="version-tag" id="version-tag">Dernière version : —</span>
   </div>
 </header>
@@ -205,6 +233,10 @@
         <li>GPU compatible Vulkan (la quasi-totalité des cartes depuis ~2016)</li>
         <li>~250 Mo d'espace disque</li>
       </ul>
+      <p>
+        <strong>Android :</strong> Android 7.0 ou plus récent, processeur 64 bits (arm64),
+        GPU compatible Vulkan, ~130 Mo d'espace libre.
+      </p>
     </div>
   </section>
 
@@ -240,17 +272,35 @@
 (function () {
   var API = "https://api.github.com/repos/santino18727-debug/crazyrace-jeu/releases/latest";
   var btn = document.getElementById("download-btn");
+  var androidBtn = document.getElementById("android-btn");
+  var androidNote = document.getElementById("android-note");
   var tag = document.getElementById("version-tag");
+
+  if (/android/i.test(navigator.userAgent)) {
+    document.getElementById("cta-buttons").classList.add("is-android");
+  }
+
+  function trouver(release, extension) {
+    return (release.assets || []).find(function (a) {
+      return extension.test(a.name);
+    });
+  }
 
   fetch(API).then(function (r) {
     if (!r.ok) throw new Error("HTTP " + r.status);
     return r.json();
   }).then(function (release) {
-    var asset = (release.assets || []).find(function (a) {
-      return /\.exe$/i.test(a.name);
-    });
+    var asset = trouver(release, /\.exe$/i);
     if (asset) {
       btn.href = asset.browser_download_url;
+    }
+    var apk = trouver(release, /\.apk$/i);
+    if (apk) {
+      androidBtn.href = apk.browser_download_url;
+    } else {
+      // Anciennes versions, ou export Android raté : le bouton garde son lien
+      // vers la page Releases, et on le dit plutôt que de laisser croire à un APK.
+      androidNote.textContent = "L'APK Android n'est pas encore disponible dans la dernière version : le bouton mène à la page des versions.";
     }
     if (release.tag_name) {
       tag.textContent = "Dernière version : " + release.tag_name;
