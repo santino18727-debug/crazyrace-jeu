@@ -84,9 +84,27 @@
     box-shadow: 0 0 30px rgba(255,46,203,0.45), 0 8px 24px rgba(0,0,0,0.4);
   }
   .btn-android:hover { box-shadow: 0 0 44px rgba(255,46,203,0.65); }
-  /* Sur un navigateur Android, le bouton du téléphone passe devant. */
-  .cta-buttons.is-android #android-btn { order: -1; }
-  .android-note {
+  .btn-mac {
+    background: linear-gradient(90deg, var(--neon-purple), #c4b0ff);
+    box-shadow: 0 0 30px rgba(139,92,246,0.5), 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .btn-mac:hover { box-shadow: 0 0 44px rgba(139,92,246,0.7); }
+  .btn-ios {
+    background: linear-gradient(90deg, #eae6ff, #ffffff);
+    box-shadow: 0 0 30px rgba(234,230,255,0.35), 0 8px 24px rgba(0,0,0,0.4);
+  }
+  /* Plateforme sans fichier à télécharger : un bouton éteint, pas un lien mort. */
+  .btn-download.is-unavailable {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px dashed var(--border);
+    box-shadow: none;
+    cursor: default;
+  }
+  .btn-download.is-unavailable:hover { transform: none; box-shadow: none; }
+  /* Le bouton de l'appareil du visiteur passe devant. */
+  .cta-buttons .is-detected { order: -1; }
+  .platform-note {
     max-width: 52ch;
     margin: 0;
     font-size: 0.85rem;
@@ -172,9 +190,22 @@
   }
   footer a { color: var(--neon-cyan); }
 
+  .honest-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+  }
+  .honest-box ol { padding-left: 20px; }
+  .honest-box li { margin: 6px 0; }
+
   @media (max-width: 480px) {
     header.hero { padding: 48px 16px 40px; }
-    .btn-download { padding: 14px 26px; font-size: 1rem; }
+    .btn-download { padding: 14px 18px; font-size: 1rem; justify-content: center; }
+    /* Quatre boutons : deux par ligne plutôt qu'une colonne interminable. */
+    .cta { display: flex; }
+    .cta-buttons { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+    .btn-download.is-unavailable { padding: 14px 8px; font-size: 0.85rem; }
+    .honest-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -185,16 +216,21 @@
   <p class="tagline">Ton meilleur temps devient un mur. Bats-le sans le toucher.</p>
   <div class="cta">
     <div class="cta-buttons" id="cta-buttons">
-      <a id="download-btn" class="btn-download" href="https://github.com/santino18727-debug/crazyrace-jeu/releases" target="_blank" rel="noopener">
-        ⬇ Télécharger pour Windows
+      <a id="download-btn" class="btn-download" href="https://github.com/santino18727-debug/crazyrace-jeu/releases" target="_blank" rel="noopener" aria-label="Télécharger pour Windows">
+        ⬇ Windows
       </a>
-      <a id="android-btn" class="btn-download btn-android" href="https://github.com/santino18727-debug/crazyrace-jeu/releases" target="_blank" rel="noopener">
-        ⬇ Télécharger pour Android
+      <a id="mac-btn" class="btn-download btn-mac" href="https://github.com/santino18727-debug/crazyrace-jeu/releases" target="_blank" rel="noopener" aria-label="Télécharger pour Mac">
+        ⬇ Mac
+      </a>
+      <a id="android-btn" class="btn-download btn-android" href="https://github.com/santino18727-debug/crazyrace-jeu/releases" target="_blank" rel="noopener" aria-label="Télécharger pour Android">
+        ⬇ Android
+      </a>
+      <a id="ios-btn" class="btn-download btn-ios is-unavailable" aria-disabled="true" aria-label="iPhone et iPad : pas encore disponible">
+        iPhone · pas encore
       </a>
     </div>
-    <p class="android-note" id="android-note">
-      Android (APK) : au premier lancement, ton téléphone te demandera d'autoriser
-      l'installation depuis ton navigateur (« sources inconnues »).
+    <p class="platform-note" id="platform-note">
+      Gratuit, pour Windows, Mac et Android. La version iPhone / iPad n'est pas encore disponible.
     </p>
     <span class="version-tag" id="version-tag">Dernière version : —</span>
   </div>
@@ -237,13 +273,21 @@
         <strong>Android :</strong> Android 7.0 ou plus récent, processeur 64 bits (arm64),
         GPU compatible Vulkan, ~130 Mo d'espace libre.
       </p>
+      <p>
+        <strong>Mac :</strong> macOS 13 ou plus récent sur Mac Apple Silicon (M1 et suivants),
+        macOS 10.15 ou plus récent sur Mac Intel, ~300 Mo d'espace libre.
+      </p>
+      <p>
+        <strong>iPhone / iPad :</strong> pas encore disponible.
+      </p>
     </div>
   </section>
 
   <section>
     <h2>À savoir avant d'installer</h2>
-    <div class="honest-box">
-      <h3>⚠️ L'installateur n'est pas signé</h3>
+    <div class="honest-grid">
+    <div class="honest-box" id="windows-box">
+      <h3>⚠️ Windows : l'installateur n'est pas signé</h3>
       <p>
         CrazyRace est un projet gratuit, sans budget de certificat de signature de code.
         Windows SmartScreen va très probablement afficher <strong>« Windows a protégé votre ordinateur »</strong>.
@@ -255,6 +299,31 @@
         utilisateur (<code>%LOCALAPPDATA%\Programs\CrazyRace</code>) et se désinstalle proprement
         depuis « Applications » Windows.
       </p>
+    </div>
+    <div class="honest-box" id="mac-box">
+      <h3>⚠️ Mac : le jeu n'est pas notarisé par Apple</h3>
+      <p>
+        Pas de compte développeur Apple payant, donc pas de notarisation : au premier lancement,
+        macOS refuse d'ouvrir le jeu. C'est attendu, il suffit de l'autoriser une fois.
+      </p>
+      <ol>
+        <li>Décompresse le zip et glisse <strong>CrazyRace</strong> dans le dossier <strong>Applications</strong>.</li>
+        <li>Ouvre-le : macOS affiche un message de blocage. Ferme-le.</li>
+        <li>Va dans <strong>Réglages Système › Confidentialité et sécurité</strong>, descends jusqu'à
+          la ligne qui cite CrazyRace et clique <strong>« Ouvrir quand même »</strong>, puis confirme.</li>
+      </ol>
+      <p>
+        Si macOS dit que l'app est « endommagée », ouvre le Terminal et tape
+        <code>xattr -dr com.apple.quarantine /Applications/CrazyRace.app</code>, puis relance.
+      </p>
+    </div>
+    <div class="honest-box" id="ios-box">
+      <h3>📱 iPhone et iPad</h3>
+      <p>
+        Sur iPhone et iPad, un jeu ne s'installe que par l'App Store : il n'y a pas de fichier à
+        télécharger comme sur Android. CrazyRace n'y est pas encore.
+      </p>
+    </div>
     </div>
   </section>
 
@@ -272,12 +341,49 @@
 (function () {
   var API = "https://api.github.com/repos/santino18727-debug/crazyrace-jeu/releases/latest";
   var btn = document.getElementById("download-btn");
+  var macBtn = document.getElementById("mac-btn");
   var androidBtn = document.getElementById("android-btn");
-  var androidNote = document.getElementById("android-note");
+  var note = document.getElementById("platform-note");
   var tag = document.getElementById("version-tag");
 
-  if (/android/i.test(navigator.userAgent)) {
-    document.getElementById("cta-buttons").classList.add("is-android");
+  var BOUTONS = {
+    windows: btn,
+    mac: macBtn,
+    android: androidBtn,
+    ios: document.getElementById("ios-btn")
+  };
+  var NOTES = {
+    windows: "Windows 10 ou 11, 64 bits. SmartScreen peut avertir à l'installation : voir « À savoir avant d'installer » plus bas.",
+    mac: "Mac : décompresse le zip et glisse CrazyRace dans Applications. Au premier lancement, macOS demande une autorisation : voir « À savoir avant d'installer » plus bas.",
+    android: "Android (APK) : au premier lancement, ton téléphone te demandera d'autoriser l'installation depuis ton navigateur (« sources inconnues »).",
+    ios: "La version iPhone / iPad n'est pas encore disponible. CrazyRace tourne sur Windows, Mac et Android."
+  };
+
+  // iPadOS se présente comme un Mac : on le reconnaît à son écran tactile.
+  function plateforme() {
+    var ua = navigator.userAgent;
+    if (/iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) return "ios";
+    if (/android/i.test(ua)) return "android";
+    if (/Macintosh|Mac OS X/.test(ua)) return "mac";
+    if (/Windows/.test(ua)) return "windows";
+    return "";
+  }
+
+  var ici = plateforme();
+  if (BOUTONS[ici]) {
+    BOUTONS[ici].classList.add("is-detected");
+    note.textContent = NOTES[ici];
+  }
+
+  // Bouton sans fichier derrière : éteint plutôt que renvoyé vers une page
+  // de versions où le visiteur ne trouverait rien pour son appareil.
+  function eteindre(bouton, texte, label) {
+    bouton.removeAttribute("href");
+    bouton.removeAttribute("target");
+    bouton.classList.add("is-unavailable");
+    bouton.setAttribute("aria-disabled", "true");
+    bouton.setAttribute("aria-label", label);
+    bouton.textContent = texte;
   }
 
   function trouver(release, extension) {
@@ -297,10 +403,24 @@
     var apk = trouver(release, /\.apk$/i);
     if (apk) {
       androidBtn.href = apk.browser_download_url;
-    } else {
+    } else if (ici === "android") {
       // Anciennes versions, ou export Android raté : le bouton garde son lien
       // vers la page Releases, et on le dit plutôt que de laisser croire à un APK.
-      androidNote.textContent = "L'APK Android n'est pas encore disponible dans la dernière version : le bouton mène à la page des versions.";
+      note.textContent = "L'APK Android n'est pas encore disponible dans la dernière version : le bouton mène à la page des versions.";
+    }
+    var mac = trouver(release, /-macos\.zip$/i);
+    if (mac) {
+      macBtn.href = mac.browser_download_url;
+    } else {
+      // Releases antérieures à la version Mac.
+      eteindre(macBtn, "Mac · pas encore", "Mac : pas encore disponible");
+      if (ici === "mac") {
+        note.textContent = "La version Mac n'est pas encore dans la dernière version publiée. CrazyRace tourne déjà sur Windows et Android.";
+      } else if (ici === "ios") {
+        note.textContent = "La version iPhone / iPad n'est pas encore disponible. CrazyRace tourne sur Windows et Android.";
+      } else if (!ici) {
+        note.textContent = "Gratuit, pour Windows et Android. Mac, iPhone et iPad : pas encore disponibles.";
+      }
     }
     if (release.tag_name) {
       tag.textContent = "Dernière version : " + release.tag_name;
