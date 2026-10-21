@@ -190,6 +190,11 @@
   }
   footer a { color: var(--neon-cyan); }
 
+  details.autres-os { margin-top: 18px; }
+  details.autres-os > summary { cursor: pointer; color: var(--neon-cyan); font-weight: 600; }
+  details.autres-os > .os-bloc { margin-top: 14px; }
+  .footer-liens { margin: 10px 0 0; }
+
   .honest-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -263,30 +268,39 @@
 
   <section>
     <h2>Configuration minimale</h2>
-    <div class="config-box">
-      <ul>
-        <li>Windows 10 ou 11, 64 bits</li>
-        <li>GPU compatible Vulkan (la quasi-totalité des cartes depuis ~2016)</li>
-        <li>~250 Mo d'espace disque</li>
-      </ul>
-      <p>
-        <strong>Android :</strong> Android 7.0 ou plus récent, processeur 64 bits (arm64),
-        GPU compatible Vulkan, ~130 Mo d'espace libre.
-      </p>
-      <p>
-        <strong>Mac :</strong> macOS 13 ou plus récent sur Mac Apple Silicon (M1 et suivants),
-        macOS 10.15 ou plus récent sur Mac Intel, ~300 Mo d'espace libre.
-      </p>
-      <p>
-        <strong>iPhone / iPad :</strong> pas encore disponible.
-      </p>
+    <div class="config-box os-groupe">
+      <div class="os-bloc" data-os="windows">
+        <p><strong>Windows :</strong></p>
+        <ul>
+          <li>Windows 10 ou 11, 64 bits</li>
+          <li>GPU compatible Vulkan (la quasi-totalité des cartes depuis ~2016)</li>
+          <li>~250 Mo d'espace disque</li>
+        </ul>
+      </div>
+      <div class="os-bloc" data-os="mac">
+        <p>
+          <strong>Mac :</strong> Mac Apple Silicon uniquement (M1 et suivants), macOS 13 ou plus récent,
+          ~300 Mo d'espace libre. Les Mac à processeur Intel ne sont pas pris en charge.
+        </p>
+      </div>
+      <div class="os-bloc" data-os="android">
+        <p>
+          <strong>Android :</strong> Android 7.0 ou plus récent, processeur 64 bits (arm64),
+          GPU compatible Vulkan, ~130 Mo d'espace libre.
+        </p>
+      </div>
+      <div class="os-bloc" data-os="ios">
+        <p>
+          <strong>iPhone / iPad :</strong> pas encore disponible.
+        </p>
+      </div>
     </div>
   </section>
 
   <section>
     <h2>À savoir avant d'installer</h2>
-    <div class="honest-grid">
-    <div class="honest-box" id="windows-box">
+    <div class="honest-grid os-groupe">
+    <div class="honest-box os-bloc" id="windows-box" data-os="windows">
       <h3>⚠️ Windows : l'installateur n'est pas signé</h3>
       <p>
         CrazyRace est un projet gratuit, sans budget de certificat de signature de code.
@@ -300,24 +314,39 @@
         depuis « Applications » Windows.
       </p>
     </div>
-    <div class="honest-box" id="mac-box">
-      <h3>⚠️ Mac : le jeu n'est pas notarisé par Apple</h3>
+    <div class="honest-box os-bloc" id="mac-box" data-os="mac">
+      <h3>⚠️ Mac : le jeu n'est pas vérifié par Apple</h3>
       <p>
-        Pas de compte développeur Apple payant, donc pas de notarisation : au premier lancement,
-        macOS refuse d'ouvrir le jeu. C'est attendu, il suffit de l'autoriser une fois.
+        CrazyRace est gratuit et n'a pas de compte développeur Apple payant : le jeu n'a donc pas passé la
+        vérification d'Apple (la « notarisation », un contrôle automatique que seuls les développeurs inscrits
+        peuvent demander). Au premier lancement, macOS refuse de l'ouvrir. C'est attendu, il suffit de
+        l'autoriser une fois.
       </p>
       <ol>
-        <li>Décompresse le zip et glisse <strong>CrazyRace</strong> dans le dossier <strong>Applications</strong>.</li>
-        <li>Ouvre-le : macOS affiche un message de blocage. Ferme-le.</li>
-        <li>Va dans <strong>Réglages Système › Confidentialité et sécurité</strong>, descends jusqu'à
-          la ligne qui cite CrazyRace et clique <strong>« Ouvrir quand même »</strong>, puis confirme.</li>
+        <li>Ouvre le fichier <strong>.dmg</strong> téléchargé (double-clic), puis glisse
+          <strong>CrazyRace</strong> sur le dossier <strong>Applications</strong> dans la même fenêtre.
+          (Si tu as récupéré un .zip à la place : décompresse-le, puis glisse CrazyRace dans Applications.)</li>
+        <li>Ouvre ton dossier <strong>Applications</strong>, fais un <strong>clic droit</strong> sur CrazyRace
+          (ou Ctrl + clic), puis <strong>Ouvrir</strong>, et confirme <strong>Ouvrir</strong> dans la fenêtre
+          d'avertissement. Ce n'est à faire qu'une fois.</li>
+        <li>Si cette fenêtre n'offre pas « Ouvrir » : va dans <strong>Réglages Système › Confidentialité et
+          sécurité</strong>, descends jusqu'à la ligne qui cite CrazyRace et clique
+          <strong>« Ouvrir quand même »</strong>, puis confirme.</li>
       </ol>
       <p>
         Si macOS dit que l'app est « endommagée », ouvre le Terminal et tape
         <code>xattr -dr com.apple.quarantine /Applications/CrazyRace.app</code>, puis relance.
       </p>
     </div>
-    <div class="honest-box" id="ios-box">
+    <div class="honest-box os-bloc" id="android-box" data-os="android">
+      <h3>📱 Android : installation hors Play Store</h3>
+      <p>
+        Le fichier APK ne vient pas du Play Store : au premier lancement, ton téléphone te demandera
+        d'autoriser l'installation depuis ton navigateur (« sources inconnues »). Accepte pour cette
+        installation, puis ouvre le fichier téléchargé.
+      </p>
+    </div>
+    <div class="honest-box os-bloc" id="ios-box" data-os="ios">
       <h3>📱 iPhone et iPad</h3>
       <p>
         Sur iPhone et iPad, un jeu ne s'installe que par l'App Store : il n'y a pas de fichier à
@@ -331,8 +360,13 @@
 
 <footer>
   <p>
-    CrazyRace — projet indépendant de GabiDevFamily.
-    Code source du site : <a href="https://github.com/santino18727-debug/crazyrace-jeu" target="_blank" rel="noopener">crazyrace-jeu</a>
+    © 2026 GabiDevFamily — CrazyRace, projet indépendant. Tous droits réservés.
+  </p>
+  <p class="footer-liens">
+    <a href="mentions-legales.html">Mentions légales</a>
+    · <a href="confidentialite.html">Confidentialité (RGPD)</a>
+    · <a href="https://github.com/santino18727-debug/crazyrace-jeu/blob/HEAD/LICENSE" target="_blank" rel="noopener">Licence</a>
+    · <a href="https://github.com/santino18727-debug/crazyrace-jeu" target="_blank" rel="noopener">Code source du site</a>
     · <a href="https://github.com/santino18727-debug/crazyrace-jeu/releases" target="_blank" rel="noopener">Toutes les versions</a>
   </p>
 </footer>
@@ -354,7 +388,7 @@
   };
   var NOTES = {
     windows: "Windows 10 ou 11, 64 bits. SmartScreen peut avertir à l'installation : voir « À savoir avant d'installer » plus bas.",
-    mac: "Mac : décompresse le zip et glisse CrazyRace dans Applications. Au premier lancement, macOS demande une autorisation : voir « À savoir avant d'installer » plus bas.",
+    mac: "Mac Apple Silicon (M1 et suivants), macOS 13 ou plus : ouvre le .dmg et glisse CrazyRace dans Applications. Au premier lancement, macOS demande une autorisation (clic droit › Ouvrir) : voir « À savoir avant d'installer » plus bas.",
     android: "Android (APK) : au premier lancement, ton téléphone te demandera d'autoriser l'installation depuis ton navigateur (« sources inconnues »).",
     ios: "La version iPhone / iPad n'est pas encore disponible. CrazyRace tourne sur Windows, Mac et Android."
   };
@@ -369,7 +403,32 @@
     return "";
   }
 
+  // N'affiche d'abord que ce qui concerne l'OS détecté ; le reste va dans un
+  // <details> « Autres systèmes », replié mais jamais supprimé. Sans JS, tout reste visible.
+  function regrouper(os) {
+    if (!os) return;
+    var groupes = document.querySelectorAll(".os-groupe");
+    for (var i = 0; i < groupes.length; i++) {
+      var groupe = groupes[i];
+      var autres = [];
+      var blocs = groupe.querySelectorAll(":scope > .os-bloc");
+      for (var j = 0; j < blocs.length; j++) {
+        if (blocs[j].getAttribute("data-os") !== os) autres.push(blocs[j]);
+      }
+      if (!autres.length) continue;
+      var details = document.createElement("details");
+      details.className = "autres-os";
+      var resume = document.createElement("summary");
+      resume.textContent = "Autres systèmes";
+      details.appendChild(resume);
+      details.style.gridColumn = "1 / -1";
+      autres.forEach(function (b) { details.appendChild(b); });
+      groupe.appendChild(details);
+    }
+  }
+
   var ici = plateforme();
+  regrouper(ici);
   if (BOUTONS[ici]) {
     BOUTONS[ici].classList.add("is-detected");
     note.textContent = NOTES[ici];
@@ -408,9 +467,13 @@
       // vers la page Releases, et on le dit plutôt que de laisser croire à un APK.
       note.textContent = "L'APK Android n'est pas encore disponible dans la dernière version : le bouton mène à la page des versions.";
     }
-    var mac = trouver(release, /-macos\.zip$/i);
+    // Le .dmg d'abord ; le zip reste en repli (anciennes versions, build sans dmg).
+    var mac = trouver(release, /-macos\.dmg$/i) || trouver(release, /-macos\.zip$/i);
     if (mac) {
       macBtn.href = mac.browser_download_url;
+      if (ici === "mac" && /\.zip$/i.test(mac.name)) {
+        note.textContent = "Mac Apple Silicon (M1 et suivants), macOS 13 ou plus : décompresse le zip et glisse CrazyRace dans Applications. Au premier lancement, macOS demande une autorisation : voir « À savoir avant d'installer » plus bas.";
+      }
     } else {
       // Releases antérieures à la version Mac.
       eteindre(macBtn, "Mac · pas encore", "Mac : pas encore disponible");

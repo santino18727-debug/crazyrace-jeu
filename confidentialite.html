@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CrazyRace — Règles de confidentialité</title>
-<meta name="description" content="Règles de confidentialité de CrazyRace : aucune donnée personnelle collectée, aucun compte, aucune publicité.">
+<meta name="description" content="Règles de confidentialité de CrazyRace : ce que le jeu enregistre, ce qu'il envoie à Google Play Games si vous vous y connectez, et comment l'effacer.">
 <style>
   :root {
     --bg: #0a0714;
@@ -48,13 +48,22 @@
 </head>
 <body>
 <main>
+  <!-- À NE PUBLIER SUR LE SITE QU'AVEC LA v0.9.2 (tâche 6.10 de docs/plan_mobile.md).
+       Cette page décrit la version à venir : Play Games (classements, succès, sauvegarde cloud)
+       dans la seule version Google Play, et l'APK Android sans vérification de version.
+       À vérifier avant publication :
+       - les succès Play Games sont bien livrés (tâche 6.8) ; sinon retirer la ligne « succès » ;
+       - la mise à jour dans l'appli (tâche 6.11) : garder ou retirer la section « Mises à jour » ;
+       - la date de mise à jour ci-dessous. -->
   <h1>Règles de confidentialité</h1>
-  <p class="maj">CrazyRace (Windows et Android) — dernière mise à jour : 1er octobre 2026</p>
+  <p class="maj">CrazyRace (Windows, Mac et Android) — dernière mise à jour : 5 octobre 2026</p>
 
   <div class="resume">
-    <strong>En bref :</strong> CrazyRace ne demande aucun compte, ne contient aucune publicité ni outil de
-    mesure d'audience, et ne collecte, ne vend et ne partage aucune donnée personnelle. Vos réglages et vos
-    records restent sur votre appareil.
+    <strong>En bref :</strong> CrazyRace ne contient aucune publicité, aucun achat intégré ni outil de mesure
+    d'audience de notre part, et nous n'avons aucun serveur : nous ne recevons jamais vos données. Vos réglages
+    et vos records restent sur votre appareil. Dans la version distribuée par <strong>Google Play</strong>
+    uniquement, vous pouvez vous connecter à <strong>Google Play Games</strong> (facultatif) : vos meilleurs
+    temps, vos succès et une sauvegarde de vos records sont alors gérés par Google, dans votre compte Google.
   </div>
 
   <h2>Qui est responsable</h2>
@@ -62,30 +71,74 @@
   Pour toute question sur ces règles, ouvrez une discussion sur
   <a href="https://github.com/santino18727-debug/crazyrace-jeu/issues" rel="noopener">la page de suivi du projet</a>.</p>
 
+  <h2>Les quatre versions du jeu</h2>
+  <ul>
+    <li><strong>Windows</strong> (téléchargée depuis notre site) ;</li>
+    <li><strong>Mac</strong> (téléchargée depuis notre site) ;</li>
+    <li><strong>Android, fichier APK</strong> téléchargé depuis notre site : sans Google Play Games ;</li>
+    <li><strong>Android, Google Play</strong> : la seule version qui propose Google Play Games.</li>
+  </ul>
+
   <h2>Ce que le jeu enregistre sur votre appareil</h2>
   <ul>
-    <li>vos <strong>réglages</strong> (par exemple le volume ou les options graphiques) ;</li>
+    <li>vos <strong>réglages</strong> (par exemple le volume, les options graphiques, le véhicule choisi) ;</li>
     <li>vos <strong>records</strong> par circuit : temps et trajectoire du meilleur tour, qui servent à afficher le fantôme et le mur de lumière.</li>
   </ul>
-  <p>Ces fichiers sont stockés dans l'espace de données privé du jeu. Ils ne sont <strong>jamais envoyés</strong>
-  à un serveur. Ils sont supprimés quand vous désinstallez le jeu (ou en effaçant ses données dans les réglages de votre appareil).</p>
+  <p>Ces fichiers sont stockés dans l'espace de données privé du jeu et ne sont jamais envoyés à un serveur de
+  notre part. Ils sont supprimés quand vous désinstallez le jeu (ou en effaçant ses données dans les réglages de
+  votre appareil).</p>
+
+  <h2>Google Play Games (version Google Play uniquement)</h2>
+  <p>La connexion à Google Play Games est <strong>facultative</strong> : le jeu se joue entièrement sans. Si vous
+  vous connectez, avec votre compte Google, le jeu utilise les services de Google pour :</p>
+  <ul>
+    <li>les <strong>classements</strong> : à la fin de chaque course, votre meilleur tour sur le circuit est envoyé au
+    classement de ce circuit. Il est visible des autres joueurs selon la visibilité de votre profil Play Games ;</li>
+    <li>les <strong>succès</strong> : les succès que vous débloquez en jouant ;</li>
+    <li>la <strong>sauvegarde dans le cloud</strong> : une sauvegarde, rangée dans votre compte Google, qui contient
+    pour chaque circuit votre meilleur temps, votre meilleur tour et une empreinte du tracé, ainsi que vos réglages,
+    la date de la sauvegarde et votre temps de jeu cumulé. Elle ne contient <strong>jamais</strong> la trajectoire
+    de vos tours (le fantôme reste sur votre appareil).</li>
+  </ul>
+  <p>Le jeu ne lit ni votre adresse e-mail, ni vos contacts, ni votre liste d'amis. Ces données sont échangées
+  directement entre votre appareil et Google : nous n'y avons pas accès, en dehors de ce que la console Google
+  Play montre à tout éditeur (par exemple le contenu public d'un classement).</p>
+  <p>Selon Google, lorsque vous utilisez Play Games, Google collecte aussi l'identité de votre profil de joueur
+  (pseudo, avatar), qu'il communique au jeu à la connexion, ainsi que des données d'analyse et de diagnostic pour
+  améliorer la stabilité de ses outils ; ces données sont chiffrées pendant leur transfert (HTTPS)
+  (<a href="https://developer.android.com/games/pgs/data-collection" rel="noopener">page de Google sur les données
+  de Play Games</a>). Elles sont traitées par Google selon ses
+  <a href="https://policies.google.com/privacy" rel="noopener">règles de confidentialité</a>.</p>
+
+  <h2>Effacer vos données Play Games</h2>
+  <p>Nous ne détenons aucune de ces données. Vous pouvez supprimer les données de jeu enregistrées par Google
+  (classements, succès, sauvegarde) depuis votre
+  <a href="https://play.google.com/games/profile" rel="noopener">profil Play Games</a>, ou votre compte Play Games
+  entier depuis votre <a href="https://myaccount.google.com" rel="noopener">compte Google</a>.</p>
+
+  <!-- À garder seulement si la tâche 6.11 (mise à jour dans l'appli) est livrée dans la v0.9.2. -->
+  <h2>Mises à jour (version Google Play)</h2>
+  <p>La version Google Play peut demander à l'application Google Play s'il existe une version plus récente du jeu
+  et vous proposer de l'installer. Cette vérification passe par Google Play, sans aucune donnée de notre part.</p>
 
   <h2>Connexion à Internet</h2>
-  <p>Au lancement du menu, le jeu vérifie s'il existe une version plus récente en interrogeant l'interface
-  publique de GitHub (<code>api.github.com</code>, dépôt public de CrazyRace). Le jeu n'envoie aucun identifiant,
-  aucun compte et aucune information sur vous ; comme pour toute requête web, GitHub reçoit l'adresse IP de votre
-  connexion et les informations techniques habituelles d'une requête, et les traite selon sa propre
+  <p>Dans la version <strong>Windows</strong>, le jeu vérifie au lancement du menu s'il existe une version plus
+  récente, en interrogeant l'interface publique de GitHub (<code>api.github.com</code>, dépôt public de CrazyRace).
+  Le jeu n'envoie aucun identifiant, aucun compte et aucune information sur vous ; comme pour toute requête web,
+  GitHub reçoit l'adresse IP de votre connexion et les informations techniques habituelles d'une requête, et les
+  traite selon sa propre
   <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">déclaration de confidentialité</a>.
   Si Internet est indisponible, le jeu fonctionne normalement hors ligne.</p>
-  <p>Sur Android, l'appli déclare pour cela l'autorisation « Internet », et aucune autre autorisation.</p>
+  <p>Les versions <strong>Mac</strong> et <strong>Android APK</strong> ne se connectent à aucun serveur. La version <strong>Google Play</strong>
+  ne se connecte qu'aux services de Google décrits ci-dessus, et seulement si vous utilisez Play Games (ou pour
+  les mises à jour).</p>
 
   <h2>Ce que le jeu ne fait pas</h2>
   <ul>
-    <li>aucun compte, aucune connexion, aucun profil ;</li>
     <li>aucune publicité, aucun achat intégré ;</li>
-    <li>aucun outil de mesure d'audience, de rapport de plantage ou de suivi ;</li>
+    <li>aucun outil de mesure d'audience, de rapport de plantage ou de suivi de notre part ;</li>
     <li>aucun accès à vos contacts, photos, micro, caméra ou position ;</li>
-    <li>aucune donnée vendue ni partagée avec des tiers.</li>
+    <li>aucun serveur de notre part : nous ne recevons, ne vendons ni ne partageons aucune donnée vous concernant.</li>
   </ul>
 
   <h2>Site de téléchargement</h2>
@@ -94,7 +147,8 @@
   publique de GitHub, avec les mêmes conséquences que ci-dessus.</p>
 
   <h2>Enfants</h2>
-  <p>CrazyRace ne collecte aucune donnée personnelle, quel que soit l'âge du joueur.</p>
+  <p>Nous ne collectons aucune donnée personnelle, quel que soit l'âge du joueur. Les fonctions Google Play Games
+  reposent sur un compte Google et suivent les règles de Google, y compris pour les comptes d'enfants.</p>
 
   <h2>Modifications</h2>
   <p>Si ces règles changent (par exemple si une fonction en ligne est ajoutée), cette page sera mise à jour avant
@@ -102,6 +156,7 @@
 
   <footer>
     <a href="./">← Retour à CrazyRace</a>
+    · <a href="mentions-legales.html">Mentions légales</a>
   </footer>
 </main>
 </body>

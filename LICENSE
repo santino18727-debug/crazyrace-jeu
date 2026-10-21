@@ -1,0 +1,35 @@
+CrazyRace
+Copyright (c) 2026 GabiDevFamily. Tous droits réservés.
+
+FRANÇAIS
+
+Ce logiciel (code source, graphismes, musique, textes, données) est la propriété
+de GabiDevFamily. Les sources ne sont pas ouvertes.
+
+Vous pouvez :
+  - télécharger les binaires publiés (Windows, Mac, Android) gratuitement ;
+  - les installer et y jouer pour votre usage personnel et non commercial ;
+  - les redistribuer tels quels, sans modification et gratuitement, en
+    indiquant leur origine.
+
+Sans accord écrit préalable de GabiDevFamily, il est interdit de : copier,
+modifier, décompiler pour en reprendre le contenu, vendre, louer ou redistribuer
+contre rémunération tout ou partie du jeu, de ses sources ou de ses ressources.
+
+Le logiciel est fourni « en l'état », sans garantie d'aucune sorte.
+
+Composants tiers : le jeu embarque des éléments soumis à leurs propres licences
+(notamment le moteur Godot, licence MIT, et les ressources listées dans les
+fichiers SOURCES.md du projet). Cette licence ne les remplace pas.
+
+ENGLISH
+
+All rights reserved. This software (source code, art, music, text, data) is
+the property of GabiDevFamily; the source code is not open. You may download the
+published binaries (Windows, Mac, Android) for free, install and play them for
+personal, non-commercial use, and redistribute them unmodified and free of
+charge with attribution. Any other use (copying, modifying, reverse engineering
+to reuse content, selling, renting, or redistributing for payment) requires
+prior written permission. The software is provided "as is", without warranty of
+any kind. Third-party components (such as the Godot engine, MIT license) remain
+under their own licenses.
